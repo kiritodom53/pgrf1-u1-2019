@@ -17,22 +17,22 @@ public class Polygon implements IGeoObject {
     public void draw(RendererLine rl) {
         for (int i = 0; i < list.size(); i++) {
             if (i == list.size() - 1) {
-                rl.drawLineDDA(list.get(0).getX(), list.get(0).getY(), list.get(i).getX(), list.get(i).getY());
+                rl.drawLineDDA(list.get(0).getX(), list.get(0).getY(), list.get(i).getX(), list.get(i).getY(), list.get(0).getColor());
             } else {
-                rl.drawLineDDA(list.get(i).getX(), list.get(i).getY(), list.get(i + 1).getX(), list.get(i + 1).getY());
+                rl.drawLineDDA(list.get(i).getX(), list.get(i).getY(), list.get(i + 1).getX(), list.get(i + 1).getY(), list.get(i).getColor());
             }
         }
     }
 
     @Override
     public void currentDraw(RendererLine rl, int x, int y) {
-        rl.drawLineDDA(list.get(0).getX(), list.get(0).getY(), x, y);
-        rl.drawLineDDA(list.get(list.size() - 1).getX(), list.get(list.size() - 1).getY(), x, y);
+        rl.drawLineDDA(list.get(0).getX(), list.get(0).getY(), x, y, 0xffff00);
+        rl.drawLineDDA(list.get(list.size() - 1).getX(), list.get(list.size() - 1).getY(), x, y, 0xffff00);
     }
 
     @Override
-    public void addPoint(int x, int y) {
-        list.add(new Point(x, y));
+    public void addPoint(int x, int y, int color) {
+        list.add(new Point(x, y, color));
     }
 
     public List<Point> getList() {

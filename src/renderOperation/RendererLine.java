@@ -46,7 +46,7 @@ public class RendererLine extends Renderer {
     /***
      * Vykreslení pomocí DDA algortimu
      */
-    public void drawLineDDA(int x1, int y1, int x2, int y2) {
+    public void drawLineDDA(int x1, int y1, int x2, int y2, int color) {
         int x;
         float k;
         float y;
@@ -64,7 +64,7 @@ public class RendererLine extends Renderer {
             y = (float) y1;
 
             for (x = x1; x <= x2; ++x) {
-                raster.drawPixel(x, (int) ((double) y + 0.5D));
+                raster.drawPixel(x, (int) ((double) y + 0.5D), color);
                 y += k;
             }
         } else {
@@ -81,7 +81,7 @@ public class RendererLine extends Renderer {
             y = (float) x1;
 
             for (x = y1; x <= y2; ++x) {
-                raster.drawPixel((int) ((double) y + 0.5D), x);
+                raster.drawPixel((int) ((double) y + 0.5D), x, color);
                 y += k;
             }
         }
@@ -90,7 +90,7 @@ public class RendererLine extends Renderer {
     /***
      * Vykreslování pomocí triviálního algoritmu
      */
-    public void drawLine(int x1, int y1, int x2, int y2) {
+    public void drawLine(int x1, int y1, int x2, int y2, int color) {
 
         double k;
         if (x1 == x2) {
@@ -108,7 +108,7 @@ public class RendererLine extends Renderer {
 
             }
             for (int i = x1; i <= x2; i++) {
-                raster.drawPixel(i, (int) (k * i + q));
+                raster.drawPixel(i, (int) (k * i + q), color);
             }
         } else {
             if (y2 < y1) {
@@ -117,7 +117,7 @@ public class RendererLine extends Renderer {
                 y2 = tempy;
             }
             for (int i = y1; i <= y2; i++) {
-                raster.drawPixel((int) ((i - q) / k), i);
+                raster.drawPixel((int) ((i - q) / k), i, color);
             }
         }
     }

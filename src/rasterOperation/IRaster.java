@@ -5,7 +5,7 @@ package rasterOperation;
  */
 
 public interface IRaster {
-    void drawPixel(int x, int y);
+    void drawPixel(int x, int y, int color);
 
     int getWidth();
 

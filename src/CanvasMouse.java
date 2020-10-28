@@ -48,6 +48,7 @@ public class CanvasMouse {
     private int x, y;
     private float r;
 
+    private int color = 0x00ffff;
 
     public CanvasMouse(int width, int height) {
         JFrame frame = new JFrame();
@@ -94,7 +95,7 @@ public class CanvasMouse {
     }
 
     private void drawPoint(int x, int y) {
-        lPol.get(lPolIn).addPoint(x, y);
+        lPol.get(lPolIn).addPoint(x, y, color);
         clear();
         lPol.get(lPolIn).draw(rl);
         panel.repaint();
@@ -151,7 +152,7 @@ public class CanvasMouse {
                 }
 
                 clear();
-                rpTemp = new RegularPolygon(new Point(x, y), r, alpha, count);
+                rpTemp = new RegularPolygon(new Point(x, y, color), r, alpha, count, color);
                 rpTemp.draw(rl);
                 panel.repaint();
             }
@@ -179,7 +180,7 @@ public class CanvasMouse {
                         regPol = 3;
                     } else if (regPol == 3 && e.getButton() == MouseEvent.BUTTON1) {
                         clear();
-                        rpl = new RegularPolygon(new Point(x, y), r, alpha, count);
+                        rpl = new RegularPolygon(new Point(x, y, color), r, alpha, count, color);
                         rPol.add(rpl);
                         regTrue = false;
                         rPol.get(rPolIn).draw(rl);
@@ -200,7 +201,7 @@ public class CanvasMouse {
                     clear();
                     if (regTrue && regPol == 1) {
                         clear();
-                        RegularPolygon rp = new RegularPolygon(new Point(x, y), (float) Math.sqrt((e.getY() - y) * (e.getY() - y) + (e.getX() - x) * (e.getX() - x)), Math.PI / alpha, count);
+                        RegularPolygon rp = new RegularPolygon(new Point(x, y, color), (float) Math.sqrt((e.getY() - y) * (e.getY() - y) + (e.getX() - x) * (e.getX() - x)), Math.PI / alpha, count, color);
                         rp.draw(rl);
                         panel.repaint();
                     }
@@ -274,7 +275,7 @@ public class CanvasMouse {
     }
 
     public void drawLine(int x, int y) {
-        line.addPoint(x, y);
+        line.addPoint(x, y, color);
         clear();
         line.draw(rl);
         panel.repaint();

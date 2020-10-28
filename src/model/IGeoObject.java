@@ -9,11 +9,12 @@ import java.util.List;
  */
 
 public interface IGeoObject {
+    int color = 0xff0000;
     void draw(RendererLine rl);
 
     void currentDraw(RendererLine rl, int x, int y);
 
-    void addPoint(int x, int y);
+    void addPoint(int x, int y, int color);
 
     List<Point> getList();
 }

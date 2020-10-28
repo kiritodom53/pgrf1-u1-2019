@@ -16,7 +16,7 @@ Klikneme pro počáteční bod, táhnem a pustíme pro konečný bod, než se ta
 == Ovládání libovolného n-úhleníku
 
 Pro vytváření lin. n-úhel. stačí klikat levým tlačítkem a potom pro uzavření kliknou pravým.
-Jestli-že chceme vydět jak vy prozatím polygon vypadal neklikáme, ale vždy táhneme.
+Jestli-že chceme vidět jak vy prozatím polygon vypadal neklikáme, ale vždy táhneme.
 
 == Ovládání pravidelného n-úhleníku
 

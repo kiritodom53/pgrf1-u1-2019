@@ -15,9 +15,9 @@ public class RasterBufferedImage implements IRaster {
     }
 
     @Override
-    public void drawPixel(int x, int y) {
+    public void drawPixel(int x, int y, int color) {
         if (x > 0 && x < getWidth() && y > 0 && y < getHeight()) {
-            bufferedImage.setRGB(x, y, 0xffff00);
+            bufferedImage.setRGB(x, y, color);
         }
     }
 

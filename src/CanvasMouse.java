@@ -41,7 +41,6 @@ public class CanvasMouse {
 
     private int count = 3;
     private double alpha = 0.0000001;
-    private int progStart = 0;
 
     private IGeoObject rpl;
 
@@ -49,6 +48,7 @@ public class CanvasMouse {
     private float r;
 
     private int color = 0x00ffff;
+    private GeometryObjectType type;
 
     public CanvasMouse(int width, int height) {
         JFrame frame = new JFrame();
@@ -108,18 +108,17 @@ public class CanvasMouse {
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
                 if (keyCode == KeyEvent.VK_Q) {
-                    //progStart = 0;
                     reset();
-                    System.out.println(progStart);
+                    System.out.println(type);
                 } else if (keyCode == KeyEvent.VK_W) {
-                    progStart = 1;
-                    System.out.println(progStart);
+                    type = GeometryObjectType.LINE;
+                    System.out.println(type);
                 } else if (keyCode == KeyEvent.VK_E) {
-                    progStart = 2;
-                    System.out.println(progStart);
+                    type = GeometryObjectType.POLYGON;
+                    System.out.println(type);
                 } else if (keyCode == KeyEvent.VK_R) {
-                    progStart = 3;
-                    System.out.println(progStart);
+                    type = GeometryObjectType.REGULAR_POLYGON;
+                    System.out.println(type);
                 }
             }
         });
@@ -161,7 +160,7 @@ public class CanvasMouse {
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (progStart == 3) {
+                if (type == GeometryObjectType.REGULAR_POLYGON) {
 
                     if (regPol == 0 && e.getButton() == MouseEvent.BUTTON1) {
                         count = 3; // nastavý výchozí hodnotu na 3
@@ -197,7 +196,7 @@ public class CanvasMouse {
         panel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
-                if (progStart == 3) {
+                if (type == GeometryObjectType.REGULAR_POLYGON) {
                     clear();
                     if (regTrue && regPol == 1) {
                         clear();
@@ -212,11 +211,11 @@ public class CanvasMouse {
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (progStart == 1) {
+                if (type == GeometryObjectType.LINE) {
                     // Line
                     drawLine(e.getX(), e.getY());
                     panel.repaint();
-                } else if (progStart == 2) {
+                } else if (type == GeometryObjectType.POLYGON) {
                     if (polygonFirst && e.getButton() == MouseEvent.BUTTON1) {
                         pl = new Polygon();
                         lPol.add(pl);
@@ -237,7 +236,7 @@ public class CanvasMouse {
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (progStart == 2) {
+                if (type == GeometryObjectType.POLYGON) {
                     if (e.getButton() == MouseEvent.BUTTON1) {
                         drawPoint(e.getX(), e.getY());
                     }
@@ -248,12 +247,12 @@ public class CanvasMouse {
         panel.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent g) {
-                if (progStart == 1) {
+                if (type == GeometryObjectType.LINE) {
                     clear();
                     line.draw(rl);
                     line.currentDraw(rl, g.getX(), g.getY());
                     panel.repaint();
-                } else if (progStart == 2) {
+                } else if (type == GeometryObjectType.POLYGON) {
                     System.out.println("draged buton : " + g.getButton());
                     clear();
                     pl.draw(rl);
@@ -266,7 +265,7 @@ public class CanvasMouse {
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (progStart == 1) {
+                if (type == GeometryObjectType.LINE) {
                     drawLine(e.getX(), e.getY());
                     panel.repaint();
                 }
@@ -279,7 +278,6 @@ public class CanvasMouse {
         clear();
         line.draw(rl);
         panel.repaint();
-        //}
     }
 
     /***
@@ -288,18 +286,18 @@ public class CanvasMouse {
     public void drawSave() {
         line.draw(rl);
 
-        for (int i = 0; i < lPol.size(); i++) {
-            for (int j = 0; j < lPol.get(i).getList().size(); j++) {
-                if (lPol.get(i).getList().size() > 2) {
-                    lPol.get(i).draw(rl);
+        for (IGeoObject iGeoObject : lPol) {
+            for (int j = 0; j < iGeoObject.getList().size(); j++) {
+                if (iGeoObject.getList().size() > 2) {
+                    iGeoObject.draw(rl);
                 }
             }
         }
 
-        for (int i = 0; i < rPol.size(); i++) {
-            for (int j = 0; j < rPol.get(i).getList().size(); j++) {
-                if (rPol.get(i).getList().size() > 2) {
-                    rPol.get(i).draw(rl);
+        for (IGeoObject iGeoObject : rPol) {
+            for (int j = 0; j < iGeoObject.getList().size(); j++) {
+                if (iGeoObject.getList().size() > 2) {
+                    iGeoObject.draw(rl);
                 }
             }
         }
@@ -309,7 +307,6 @@ public class CanvasMouse {
         Graphics gr = img.getGraphics();
         gr.setColor(new Color(0x2f2f2f));
         gr.fillRect(0, 0, img.getWidth(), img.getHeight());
-
         drawSave();
     }
 
